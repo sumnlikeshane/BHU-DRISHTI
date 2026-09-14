@@ -1,0 +1,11 @@
+dist
+graphify-out
+node_modules
+package-lock.json
+.codex
+AGENTS.md
+ROUGH_PLAN.md
+scripts/maps/source/
+public/data/maps/
+public/images/india-story-poster.svg
+public/favicon.svg
