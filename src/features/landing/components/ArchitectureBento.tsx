@@ -2,108 +2,120 @@ export function ArchitectureBento() {
   return (
     <section
       id="about"
-      className="border-t border-white/10 bg-[#06080a] px-4 py-20 text-white sm:px-6 sm:py-28 md:px-12 lg:px-16"
+      className="border-t border-neutral-200 bg-white py-20 text-neutral-900 sm:py-28 lg:py-32"
       aria-labelledby="architecture-heading"
     >
-      <div className="mx-auto max-w-6xl">
-        {/* Eyebrow & Section Heading */}
-        <div className="max-w-2xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 font-mono text-xs font-medium text-emerald-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            System Architecture
+      <div className="mx-auto max-w-[94rem] px-5 sm:px-8 md:px-12 lg:px-16">
+        {/* Editorial Section Header */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-8 lg:gap-12 pb-12 sm:pb-16 border-b border-neutral-200">
+          <div className="md:col-span-1 lg:col-span-1">
+            <span className="font-sans text-3xl font-light tracking-tight text-neutral-400 sm:text-4xl lg:text-5xl">
+              /02
+            </span>
           </div>
-          <h2
-            id="architecture-heading"
-            className="font-sans text-3xl leading-tight font-semibold tracking-tight text-white sm:text-4xl md:text-5xl"
-          >
-            Three Layers. One Auditable Chain of Truth.
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-400 sm:text-base">
-            BHU-DRISHTI does not replace India’s existing spatial investments.
-            It adds an AI and GIS interpretation layer that converts raw field
-            photographs and GIS points into defensible biophysical verification.
-          </p>
+          <div className="md:col-span-7 lg:col-span-7">
+            <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
+              The Interpretation Gap
+            </div>
+            <h2
+              id="architecture-heading"
+              className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-950 leading-[1.08]"
+            >
+              The Data Already Exists. The Reasoning Layer Is Missing.
+            </h2>
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-neutral-600 font-normal max-w-2xl">
+              WDC-PMKSY 2.0 already uses geo-tagged photographs, GIS verification and remote
+              sensing for planning and monitoring. The challenge is not simply collecting
+              photographs or displaying them on a map.
+            </p>
+            <div className="mt-4 border-l-2 border-neutral-900 pl-4 py-1 text-sm sm:text-base text-neutral-900 font-medium">
+              Which structure needs attention first? Can the available evidence actually support that conclusion?
+            </div>
+            <p className="mt-4 text-xs sm:text-sm leading-relaxed text-neutral-500 font-normal max-w-2xl">
+              BHU-DRISHTI addresses this interpretation gap by connecting field evidence with spatial,
+              environmental and temporal context.
+            </p>
+          </div>
+          <div className="md:col-span-4 lg:col-span-4 flex items-end justify-start md:justify-end">
+            <div className="font-mono text-xs text-neutral-400 space-y-1">
+              <div>ECOSYSTEM: DRISHTI + SRISHTI/BHUVAN</div>
+              <div>REASONING: EXPLAINABLE REVIEW QUEUE</div>
+            </div>
+          </div>
         </div>
 
-        {/* 3-Column Bento Grid */}
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {/* Card 1: Drishti */}
-          <div className="glass-card-dark flex flex-col justify-between rounded-3xl p-6 transition-all duration-300 sm:p-8">
+        {/* 3 Editorial Architecture Tiers with 1px hairlines */}
+        <div className="grid grid-cols-1 divide-y md:divide-y-0 md:divide-x divide-neutral-200 border-b border-neutral-200 md:grid-cols-3">
+          {/* Tier 01: Drishti Field Capture */}
+          <div className="flex flex-col justify-between py-10 md:py-12 md:pr-10">
             <div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
+              <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+                <span className="uppercase tracking-wider text-neutral-900 font-medium">
                   Tier 01 · Ground
                 </span>
-                <span className="font-mono text-[11px] text-neutral-500">
-                  NRSC Mobile
-                </span>
+                <span>Drishti Capture</span>
               </div>
-              <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-white sm:text-2xl">
+              <h3 className="mt-6 font-sans text-2xl sm:text-3xl font-light tracking-tight text-neutral-950">
                 Drishti Field Capture
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-400">
-                Field surveyors capture geotagged photographs of check dams,
-                percolation tanks, and contour bunds with hardware compass
-                heading and device telemetry.
+              <p className="mt-4 text-sm leading-relaxed text-neutral-600 font-normal">
+                Field surveyors capture geo-coded photographs of check dams,
+                percolation tanks, and contour bunds with hardware camera coordinates
+                and ground observations.
               </p>
             </div>
-            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-xs text-neutral-400">
-              <span>Answers:</span>
-              <span className="text-neutral-200">"What is on the ground?"</span>
+            <div className="mt-10 pt-4 border-t border-neutral-100 flex items-center justify-between font-mono text-xs text-neutral-500">
+              <span>Captures:</span>
+              <span className="text-neutral-950 font-medium">"The Ground"</span>
             </div>
           </div>
 
-          {/* Card 2: Srishti / Bhuvan */}
-          <div className="glass-card-dark flex flex-col justify-between rounded-3xl p-6 transition-all duration-300 sm:p-8">
+          {/* Tier 02: Srishti GIS Layers */}
+          <div className="flex flex-col justify-between py-10 md:py-12 md:px-10">
             <div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
+              <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+                <span className="uppercase tracking-wider text-neutral-900 font-medium">
                   Tier 02 · Spatial
                 </span>
-                <span className="font-mono text-[11px] text-neutral-500">
-                  ISRO Bhuvan
-                </span>
+                <span>Srishti / Bhuvan</span>
               </div>
-              <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-white sm:text-2xl">
+              <h3 className="mt-6 font-sans text-2xl sm:text-3xl font-light tracking-tight text-neutral-950">
                 Srishti GIS Layers
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-400">
-                CartoDEM 30m digital elevation contours, administrative
-                micro-watershed boundaries, and national river basin networks
-                projected in high resolution.
+              <p className="mt-4 text-sm leading-relaxed text-neutral-600 font-normal">
+                30 m SRISHTI-DRISHTI satellite data, administrative micro-watershed
+                boundaries, slope, drainage lines, and soil characteristics displayed
+                on an interactive map.
               </p>
             </div>
-            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-xs text-neutral-400">
-              <span>Answers:</span>
-              <span className="text-neutral-200">"Where is it mapped?"</span>
+            <div className="mt-10 pt-4 border-t border-neutral-100 flex items-center justify-between font-mono text-xs text-neutral-500">
+              <span>Shows:</span>
+              <span className="text-neutral-950 font-medium">"It on a Map"</span>
             </div>
           </div>
 
-          {/* Card 3: BHU-DRISHTI */}
-          <div className="glass-card-dark flex flex-col justify-between rounded-3xl border-emerald-500/30 bg-gradient-to-b from-[#0e1614] to-[#0a1012] p-6 shadow-2xl transition-all duration-300 sm:p-8">
+          {/* Tier 03: BHU-DRISHTI AI Engine */}
+          <div className="flex flex-col justify-between py-10 md:py-12 md:pl-10">
             <div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
+              <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+                <span className="uppercase tracking-wider text-neutral-900 font-medium">
                   Tier 03 · Intelligence
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] text-emerald-300">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                  Active Layer
-                </span>
+                <span className="text-neutral-950 font-medium">Decision Support</span>
               </div>
-              <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                BHU-DRISHTI AI Engine
+              <h3 className="mt-6 font-sans text-2xl sm:text-3xl font-light tracking-tight text-neutral-950">
+                BHU-DRISHTI Reasoning
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-300">
-                Continuous radar (Sentinel-1 SAR) &amp; optical (Sentinel-2)
-                cross-audit. Detects dry/silted structures, photo spoofing, and
-                generates explainable audit dossiers.
+              <p className="mt-4 text-sm leading-relaxed text-neutral-600 font-normal">
+                Reads the evidence and tells an officer what to do next. Combines
+                geo-coded photographs, satellite observations, and watershed context
+                to turn existing records into an explainable review queue.
               </p>
             </div>
-            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-xs text-emerald-300">
-              <span>Answers:</span>
-              <span className="font-medium text-white">
-                "Does it work &amp; should we pay?"
+            <div className="mt-10 pt-4 border-t border-neutral-100 flex items-center justify-between font-mono text-xs text-neutral-500">
+              <span>Delivers:</span>
+              <span className="text-neutral-950 font-medium">
+                "What to Do Next"
               </span>
             </div>
           </div>

@@ -2,11 +2,33 @@ import { useEffect, useRef, useState } from 'react'
 
 export function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [activeVisual, setActiveVisual] = useState<'raster' | 'stream'>('raster')
+  const [timeString, setTimeString] = useState('IN, 14:03:41 IST')
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return false
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches
   })
+
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date()
+        const formatted = new Intl.DateTimeFormat('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(now)
+        setTimeString(`IN, ${formatted} IST`)
+      } catch {
+        setTimeString('IN, 14:03:41 IST')
+      }
+    }
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return
@@ -41,219 +63,283 @@ export function VideoHero() {
 
   return (
     <section
-      className="relative flex min-h-[94vh] flex-col justify-between bg-[#06080a] p-2.5 sm:p-4 md:p-6"
+      className="relative w-full bg-white text-neutral-900 pb-12 pt-4 sm:pb-16 sm:pt-6"
       aria-label="Hero Overview"
     >
-      {/* Outer rounded container matching the reference card frame */}
-      <div className="relative flex min-h-[88vh] flex-1 flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#090d11] p-6 shadow-2xl sm:rounded-[2.25rem] sm:p-8 md:rounded-[2.75rem] md:p-12 lg:p-16">
-        {/* Background Video */}
-        <video
-          ref={videoRef}
-          src="/ditther-150926-112600-720x404.mp4"
-          autoPlay={!prefersReducedMotion}
-          loop
-          muted
-          playsInline
-          data-testid="hero-video"
-          onLoadedData={() => setIsVideoLoaded(true)}
-          className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 select-none ${
-            isVideoLoaded ? 'opacity-85' : 'opacity-30'
-          }`}
-          aria-hidden="true"
-        />
-
-        {/* Retro pixel / LED dither mesh overlay texture */}
-        <div
-          className="dither-mesh-overlay pointer-events-none absolute inset-0 opacity-35 mix-blend-overlay"
-          aria-hidden="true"
-        />
-
-        {/* Ambient gradients for high contrast and readability */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06080a] via-[#06080a]/50 to-[#06080a]/30"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_75%,rgba(6,8,10,0.88)_0%,rgba(6,8,10,0.45)_55%,transparent_100%)]"
-          aria-hidden="true"
-        />
-
-        {/* Top Navigation Bar */}
-        <header className="relative z-10 flex w-full items-center justify-between">
-          {/* Brand Mark */}
+      <div className="mx-auto max-w-[94rem] px-5 sm:px-8 md:px-12 lg:px-16">
+        {/* Top Minimalist Navigation (Exact Reference Layout) */}
+        <header className="flex w-full items-center justify-between border-b border-neutral-100 pb-4 text-xs sm:text-sm">
+          {/* Brand Mark with Registered Symbol */}
           <a
             href="#top"
-            className="group inline-flex items-center gap-2.5 text-white transition-opacity hover:opacity-90"
+            className="group flex items-center gap-1.5 font-sans font-semibold tracking-tight text-neutral-950 transition-opacity hover:opacity-75"
             aria-label="BHU-DRISHTI Home"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/20 bg-white/10 font-mono text-sm font-bold text-emerald-400 shadow-inner backdrop-blur-md transition-colors group-hover:border-emerald-400/50">
-              &amp;
-            </div>
-            <div className="flex flex-col">
-              <span className="font-sans text-sm leading-none font-bold tracking-tight text-white sm:text-base">
-                BHU-DRISHTI
-              </span>
-              <span className="mt-0.5 font-mono text-[9px] tracking-widest text-neutral-400 uppercase sm:text-[10px]">
-                Catchment Intelligence
-              </span>
-            </div>
+            <span className="text-base sm:text-lg font-medium">BHU-DRISHTI</span>
+            <sup className="text-[10px] font-normal tracking-normal text-neutral-400">®</sup>
           </a>
 
-          {/* Desktop Nav Links */}
+          {/* Clean Navigation Links */}
           <nav
-            className="hidden items-center gap-8 text-xs font-medium text-neutral-300 md:flex"
+            className="hidden items-center gap-7 lg:gap-10 font-sans text-neutral-600 md:flex"
             aria-label="Primary navigation"
           >
-            <a href="#about" className="transition-colors hover:text-white">
+            <a
+              href="#about"
+              className="transition-colors hover:text-neutral-950 hover:underline underline-offset-8 decoration-neutral-300"
+            >
               About
             </a>
             <a
               href="#how-it-works"
-              className="transition-colors hover:text-white"
+              className="transition-colors hover:text-neutral-950 hover:underline underline-offset-8 decoration-neutral-300"
             >
               How It Works
             </a>
-            <a href="#impact" className="transition-colors hover:text-white">
+            <a
+              href="#impact"
+              className="transition-colors hover:text-neutral-950 hover:underline underline-offset-8 decoration-neutral-300"
+            >
               Impact
             </a>
             <a
               href="/login"
-              className="text-neutral-400 transition-colors hover:text-white"
+              className="text-neutral-400 transition-colors hover:text-neutral-950 hover:underline underline-offset-8 decoration-neutral-300"
             >
               Login Secure
             </a>
           </nav>
 
-          {/* Top-Right Action Pill Button (Exact Reference Match) */}
-          <div className="flex items-center gap-3">
+          {/* Right Utility (Timestamp + Sleek Action Arrow) */}
+          <div className="flex items-center gap-6 sm:gap-8 font-mono text-xs">
+            <span className="hidden sm:inline-block font-mono text-neutral-400 tracking-tight">
+              {timeString}
+            </span>
             <a
               href="/command-centre"
-              className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-xs font-semibold tracking-tight text-black shadow-md transition-all duration-200 hover:scale-[1.02] hover:bg-neutral-100 active:scale-[0.98] sm:px-6 sm:py-2.5 sm:text-sm"
+              className="group inline-flex items-center gap-1.5 font-sans text-xs sm:text-sm font-medium text-neutral-950 transition-colors hover:text-neutral-600"
             >
-              Start review intake
+              <span>Start review intake</span>
+              <span
+                className="transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </a>
           </div>
         </header>
 
-        {/* Lower Hero Content (Lower-Left Alignment) */}
-        <div className="relative z-10 mt-auto pt-24 pb-4 sm:pt-32">
-          <div className="max-w-3xl">
-            {/* Primary Display Headline */}
-            <h1 className="font-sans text-3xl leading-[1.04] font-semibold tracking-[-0.035em] text-balance text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Structure Your <br />
-              Catchment Requirement
-            </h1>
-
-            {/* Subtitle / Value Proposition */}
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed font-normal text-balance text-neutral-300 sm:mt-5 sm:text-base md:text-lg">
-              We cross-verify geotagged Drishti ground photos, Sentinel-1/2
-              satellite hydrology, and terrain slope models across PMKSY assets.
-              Continuous biophysical truth before fund disbursal.
-            </p>
-
-            {/* Action Buttons Row */}
-            <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
-              <a
-                href="/command-centre"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-xs font-semibold tracking-tight text-black shadow-xl transition-all duration-200 hover:scale-[1.02] hover:bg-neutral-100 active:scale-[0.98] sm:text-sm"
-              >
-                Start review intake
-              </a>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-6 py-3 text-xs font-medium tracking-tight text-white backdrop-blur-md transition-all duration-200 hover:scale-[1.02] hover:bg-white/15 active:scale-[0.98] sm:text-sm"
-              >
-                Review Evidence Audits?
-              </a>
+        {/* Asymmetric 3-Column Editorial Hero Grid */}
+        <div className="pt-6 pb-6 sm:pt-8 sm:pb-8 lg:pt-10 lg:pb-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8 lg:gap-10 items-start">
+            {/* Left Column: Index Number */}
+            <div className="md:col-span-1 lg:col-span-1">
+              <span className="font-sans text-2xl font-light tracking-tight text-neutral-400 sm:text-3xl lg:text-4xl">
+                /01
+              </span>
             </div>
 
-            {/* Floating Glass Metric Cards (Bottom-Left) */}
-            <div className="mt-8 flex max-w-xl flex-wrap gap-3 sm:mt-10 sm:gap-4">
-              {/* Card 1: Interventions under mandate */}
-              <div className="min-w-[170px] flex-1 rounded-2xl border border-white/10 bg-black/50 p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-black/60 sm:min-w-[200px] sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex h-5 w-5 items-center justify-center rounded text-neutral-400">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                    </svg>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-400">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                    412
-                  </span>
-                </div>
-                <div className="mt-3">
-                  <div className="font-sans text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    34,850
-                  </div>
-                  <div className="mt-1 font-mono text-[10px] tracking-wider text-neutral-400 uppercase">
-                    Watersheds Audited
-                  </div>
-                </div>
+            {/* Center Column: Dominant Lightweight Headline + Subtitle + Description */}
+            <div className="md:col-span-7 lg:col-span-7 pr-0 lg:pr-6">
+              <h1 className="font-sans text-3xl font-light tracking-[-0.035em] text-neutral-950 sm:text-5xl md:text-5xl lg:text-6xl xl:text-[3.75rem] leading-[1.06]">
+                A Decision-Support Layer for Watershed Monitoring
+              </h1>
+              <p className="mt-2.5 sm:mt-3 font-sans text-base sm:text-lg lg:text-xl font-light tracking-tight text-neutral-600">
+                Drishti captures the ground. Srishti shows it on a map. BHU-DRISHTI reads the evidence and tells an officer what to do next.
+              </p>
+
+              <div className="mt-3.5 sm:mt-4 max-w-2xl text-xs sm:text-sm leading-relaxed text-neutral-600 font-normal">
+                <p>
+                  Built directly over the existing Drishti + Srishti/Bhuvan ecosystem. It connects
+                  geo-coded photographs, satellite observations and watershed context to turn existing
+                  records into an explainable review queue.
+                </p>
               </div>
 
-              {/* Card 2: National coverage */}
-              <div className="min-w-[170px] flex-1 rounded-2xl border border-white/10 bg-black/50 p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-black/60 sm:min-w-[200px] sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex h-5 w-5 items-center justify-center rounded text-neutral-400">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="2" y1="12" x2="22" y2="12" />
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                    </svg>
+              {/* Editorial Inline Contextual Data & Core Product Principle */}
+              <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-4 sm:gap-8 border-t border-neutral-100 pt-4">
+                <div>
+                  <div className="font-sans text-xl sm:text-2xl font-light text-neutral-950">
+                    1,220
                   </div>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/20 px-2.5 py-0.5 font-mono text-[10px] font-medium text-indigo-300">
-                    <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
-                    Remote
-                  </span>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                    Sanctioned Projects
+                  </div>
                 </div>
-                <div className="mt-3">
-                  <div className="font-sans text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    MH · RJ · MP · KA
+
+                <div className="h-6 w-px bg-neutral-200 hidden sm:block" />
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-sans text-xl sm:text-2xl font-light text-neutral-950">
+                      1.24 Lakh
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   </div>
-                  <div className="mt-1 font-mono text-[10px] tracking-wider text-neutral-400 uppercase">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                    Water Structures
+                  </div>
+                </div>
+
+                <div className="h-6 w-px bg-neutral-200 hidden sm:block" />
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-sans text-sm sm:text-base font-light text-neutral-950">
+                      MH · RJ · MP · KA
+                    </span>
+                    <span className="font-mono text-[9px] text-neutral-500 border border-neutral-200 px-1 py-0.2">
+                      Remote
+                    </span>
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
                     Coverage
                   </div>
                 </div>
+
+                <div className="ml-auto">
+                  <a
+                    href="#how-it-works"
+                    className="group inline-flex items-center gap-1.5 text-xs font-medium text-neutral-600 hover:text-neutral-950 transition-colors"
+                  >
+                    <span>Evidence Fusion Architecture</span>
+                    <span
+                      className="transition-transform duration-200 group-hover:translate-x-1"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Structured Metadata / Project Info */}
+            <div className="md:col-span-4 lg:col-span-4 md:border-l md:border-neutral-100 md:pl-6 lg:pl-8">
+              <div className="space-y-3">
+                <div className="font-sans text-xs font-medium tracking-tight text-neutral-900">
+                  Project Info
+                </div>
+                <div className="h-px w-full bg-neutral-200" />
+
+                <dl className="space-y-2 font-sans text-xs">
+                  <div className="flex justify-between gap-4 py-0.5 border-b border-neutral-100">
+                    <dt className="text-neutral-400 font-normal">Layer</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      Decision-Support Layer
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-0.5 border-b border-neutral-100">
+                    <dt className="text-neutral-400 font-normal">Ecosystem</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      Drishti + Srishti/Bhuvan
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-0.5 border-b border-neutral-100">
+                    <dt className="text-neutral-400 font-normal">Programme</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      WDC-PMKSY 2.0 / DoLR
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-0.5 border-b border-neutral-100">
+                    <dt className="text-neutral-400 font-normal">Earth Obs</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      30m SRISHTI-DRISHTI
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-0.5 border-b border-neutral-100">
+                    <dt className="text-neutral-400 font-normal">Ground Truth</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      Geo-coded Drishti Photos
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-0.5">
+                    <dt className="text-neutral-400 font-normal">Deliverable</dt>
+                    <dd className="text-right text-neutral-950 font-normal">
+                      Explainable Review Queue
+                    </dd>
+                  </div>
+                </dl>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Minimalist Bottom Right Metadata */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-4 font-mono text-[11px] text-neutral-500">
-            <div>Smart India Hackathon 2026 · Problem Statement SIH26015</div>
-            <div className="flex items-center gap-6">
-              <span>© 2026 BHU-DRISHTI</span>
-              <a
-                href="#about"
-                className="transition-colors hover:text-neutral-300"
+        {/* Large Feature / Visual Content Area (Directly Matching Reference) */}
+        <div className="relative w-full overflow-hidden border border-neutral-200 bg-neutral-950 text-white">
+          {/* Mode Switcher / Architectural Header Bar */}
+          <div className="flex items-center justify-between border-b border-white/10 bg-neutral-900/90 px-4 py-2.5 font-mono text-[11px] text-neutral-400 backdrop-blur">
+            <div className="flex items-center gap-3">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>CATCHMENT ID: MH-NSK-0427 · TRIMBAKESHWAR BASIN</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setActiveVisual('raster')}
+                className={`transition-colors ${
+                  activeVisual === 'raster'
+                    ? 'text-white font-medium underline underline-offset-4'
+                    : 'text-neutral-400 hover:text-neutral-200'
+                }`}
               >
-                Terms
-              </a>
-              <a
-                href="#about"
-                className="transition-colors hover:text-neutral-300"
+                Dither Raster
+              </button>
+              <span className="text-neutral-600">/</span>
+              <button
+                type="button"
+                onClick={() => setActiveVisual('stream')}
+                className={`transition-colors ${
+                  activeVisual === 'stream'
+                    ? 'text-white font-medium underline underline-offset-4'
+                    : 'text-neutral-400 hover:text-neutral-200'
+                }`}
               >
-                Privacy
-              </a>
-              <a
-                href="#about"
-                className="transition-colors hover:text-neutral-300"
-              >
-                Data Provenance
-              </a>
+                Kinetic Stream
+              </button>
+            </div>
+          </div>
+
+          {/* Visual Container */}
+          <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-neutral-950">
+            {/* Background Video (Kept for automated tests and live kinetic mode) */}
+            <video
+              ref={videoRef}
+              src="/ditther-150926-112600-720x404.mp4"
+              autoPlay={!prefersReducedMotion}
+              loop
+              muted
+              playsInline
+              data-testid="hero-video"
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 select-none ${
+                activeVisual === 'stream' ? 'opacity-90' : 'opacity-0 pointer-events-none'
+              }`}
+              aria-hidden="true"
+            />
+
+            {/* User-Provided Dither Raster Visual */}
+            <img
+              src="/ditther-150926-121324.png"
+              alt="Catchment biophysical raster telemetry"
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 select-none ${
+                activeVisual === 'raster' ? 'opacity-95' : 'opacity-0 pointer-events-none'
+              }`}
+            />
+
+            {/* Subtle corner architectural metadata */}
+            <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] sm:text-xs text-white/80 bg-black/60 px-3 py-1.5 backdrop-blur-sm border border-white/10">
+              RESOL: 10m MULTISPECTRAL · REVISIT: 5-DAY · SENSOR: SENTINEL-1/2
+            </div>
+          </div>
+
+          {/* Architectural Figure Caption */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-t border-white/10 bg-neutral-900/90 px-4 py-2.5 font-mono text-[11px] text-neutral-400">
+            <div>
+              Fig. 01 — Multi-source evidence fusion: Geo-coded Drishti ground truth, 30m SRISHTI-DRISHTI satellite data &amp; watershed terrain context.
+            </div>
+            <div className="text-neutral-500">
+              LAT: 20.26° N · LON: 73.61° E
             </div>
           </div>
         </div>
@@ -261,3 +347,4 @@ export function VideoHero() {
     </section>
   )
 }
+

@@ -2386,13 +2386,7 @@ a:focus-visible,
 .route-state {
   min-height: 100svh;
   padding: clamp(1.25rem, 4vw, 4rem) var(--page-gutter);
-  background:
-    radial-gradient(
-      circle at 80% 15%,
-      rgb(94 152 149 / 20%),
-      transparent 30rem
-    ),
-    var(--canvas);
+  background: var(--canvas);
 }
 
 .auth-brand {
@@ -2418,10 +2412,10 @@ a:focus-visible,
   width: min(100%, 34rem);
   margin: clamp(4rem, 11vh, 8rem) auto 0;
   padding: clamp(1.5rem, 4vw, 3rem);
-  background: rgb(255 255 255 / 72%);
+  background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 2rem 5rem rgb(23 51 45 / 9%);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .auth-card h1,
@@ -2449,7 +2443,7 @@ a:focus-visible,
   margin: 2rem 0 1.5rem;
   padding: 0.3rem;
   background: var(--surface);
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
 
 .auth-mode button,
@@ -2458,10 +2452,10 @@ a:focus-visible,
 .form-alert button {
   min-height: 2.6rem;
   color: var(--ink);
-  font-weight: 750;
+  font-weight: 500;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   cursor: pointer;
 }
 
@@ -2481,7 +2475,7 @@ a:focus-visible,
   gap: 0.45rem;
   color: var(--ink-muted);
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .auth-form input,
@@ -2489,15 +2483,15 @@ a:focus-visible,
   min-height: 3rem;
   padding: 0.7rem 0.85rem;
   color: var(--ink);
-  background: rgb(255 255 255 / 75%);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 0;
 }
 
 .auth-form input:focus,
 .queue-toolbar select:focus {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 2px;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
 }
 
 .button-primary,
@@ -2507,35 +2501,37 @@ a:focus-visible,
   justify-content: center;
   min-height: 3rem;
   padding: 0.75rem 1rem;
-  font-weight: 850;
+  font-weight: 500;
   text-decoration: none;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
 
 .button-primary {
-  color: var(--canvas);
-  background: var(--forest);
-  border: 1px solid var(--forest);
+  color: #ffffff;
+  background: #111111;
+  border: 1px solid #111111;
   cursor: pointer;
 }
 
 .button-primary:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: wait;
 }
 
 .button-secondary {
   width: fit-content;
   color: var(--ink);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--border);
 }
 
 .text-link {
   display: inline-block;
   margin-top: 1.5rem;
-  color: var(--deep-aqua);
+  color: var(--ink);
   font-size: 0.78rem;
-  font-weight: 750;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .form-alert {
@@ -2547,19 +2543,19 @@ a:focus-visible,
   font-size: 0.8rem;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
 
 .form-alert--error {
   color: #702e29;
-  background: #f7e5e2;
-  border-color: rgb(152 69 61 / 35%);
+  background: #fafafa;
+  border-color: #e5e5e5;
 }
 
 .form-alert--success {
   color: #204f3d;
-  background: #e3f0e9;
-  border-color: rgb(57 114 91 / 35%);
+  background: #fafafa;
+  border-color: #e5e5e5;
 }
 
 .route-state {
@@ -2587,9 +2583,8 @@ a:focus-visible,
   justify-content: space-between;
   min-height: 4.75rem;
   padding: 0.75rem var(--page-gutter);
-  background: rgb(242 246 243 / 90%);
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
 }
 
 .command-user {
@@ -2602,7 +2597,7 @@ a:focus-visible,
 
 .command-user button {
   padding-inline: 0.85rem;
-  border-color: var(--border-strong);
+  border-color: var(--border);
 }
 
 .command-main {
@@ -2642,7 +2637,7 @@ a:focus-visible,
 .case-facts dd {
   margin: 0.28rem 0 0;
   font-size: 0.86rem;
-  font-weight: 750;
+  font-weight: 500;
 }
 
 .command-main > .form-alert {
@@ -2656,7 +2651,7 @@ a:focus-visible,
   color: var(--ink-muted);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .summary-grid {
@@ -2667,14 +2662,14 @@ a:focus-visible,
   overflow: hidden;
   background: var(--border);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .summary-grid article {
   display: grid;
   gap: 0.65rem;
   padding: clamp(1.2rem, 3vw, 2rem);
-  background: var(--surface);
+  background: #ffffff;
 }
 
 .summary-grid span {
@@ -2718,9 +2713,9 @@ a:focus-visible,
 
 .case-card {
   overflow: hidden;
-  background: rgb(255 255 255 / 60%);
+  background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .case-card__topline {
@@ -2738,23 +2733,26 @@ a:focus-visible,
 }
 
 .priority-badge {
-  padding: 0.3rem 0.5rem;
-  color: var(--canvas);
-  font-weight: 850;
-  border-radius: 99rem;
+  padding: 0.2rem 0.5rem;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 0;
 }
 
 .priority-badge--critical,
 .priority-badge--high {
-  background: var(--priority);
+  background: #991b1b;
 }
 
 .priority-badge--medium {
-  background: var(--monitor);
+  background: #854d0e;
 }
 
 .priority-badge--low {
-  background: var(--healthy);
+  background: #166534;
 }
 
 .case-card__body {

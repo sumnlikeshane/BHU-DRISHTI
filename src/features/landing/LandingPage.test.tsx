@@ -71,14 +71,14 @@ describe('Clean Landing Page Redesign', () => {
 
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      /Structure Your Catchment Requirement/i,
+      /A Decision-Support Layer for Watershed Monitoring/i,
     )
 
     for (const heading of [
-      'Three Layers. One Auditable Chain of Truth.',
-      'Biophysical Truth. Not an Opaque Score.',
-      'Actionable Decisions for District Officers',
-      'Accountability at Catchment Scale',
+      'The Data Already Exists. The Reasoning Layer Is Missing.',
+      'Evidence Fusion Aligned by Work ID',
+      'Every Reviewed Case Placed into Four States',
+      'Evidence-Based Prioritisation at Scale',
     ]) {
       expect(
         screen.getByRole('heading', { level: 2, name: heading }),
@@ -112,9 +112,10 @@ describe('Clean Landing Page Redesign', () => {
   it('renders the floating telemetry cards with active metrics', () => {
     render(<LandingPage />)
 
-    expect(screen.getByText('34,850')).toBeInTheDocument()
-    expect(screen.getByText('Watersheds Audited')).toBeInTheDocument()
-    expect(screen.getByText('412')).toBeInTheDocument()
+    expect(screen.getAllByText('1,220').length).toBeGreaterThan(0)
+    expect(screen.getByText('Sanctioned Projects')).toBeInTheDocument()
+    expect(screen.getAllByText('1.24 Lakh').length).toBeGreaterThan(0)
+    expect(screen.getByText('Water Structures')).toBeInTheDocument()
 
     expect(screen.getByText('MH · RJ · MP · KA')).toBeInTheDocument()
     expect(screen.getByText('Coverage')).toBeInTheDocument()
@@ -126,19 +127,18 @@ describe('Clean Landing Page Redesign', () => {
 
     expect(screen.getByText('Drishti Field Capture')).toBeInTheDocument()
     expect(screen.getByText('Srishti GIS Layers')).toBeInTheDocument()
-    expect(screen.getByText('BHU-DRISHTI AI Engine')).toBeInTheDocument()
+    expect(screen.getByText('BHU-DRISHTI Reasoning')).toBeInTheDocument()
   })
 
-  it('renders the four biophysical verification protocols', () => {
+  it('renders the four evidence sources and reasoning abstention rule', () => {
     render(<LandingPage />)
 
-    expect(screen.getByText('Water Retention Index (WRI)')).toBeInTheDocument()
-    expect(screen.getByText('Vegetation Response Delta')).toBeInTheDocument()
+    expect(screen.getByText('Field Evidence')).toBeInTheDocument()
+    expect(screen.getByText('Earth Observation')).toBeInTheDocument()
+    expect(screen.getByText('Hydrometeorology')).toBeInTheDocument()
+    expect(screen.getByText('Watershed Context')).toBeInTheDocument()
     expect(
-      screen.getByText('Topographic Drainage Alignment'),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText('Temporal Photo & Geotag Forensics'),
+      screen.getByText('"Insufficient Evidence" is a Valid Output'),
     ).toBeInTheDocument()
   })
 
