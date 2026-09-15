@@ -1,32 +1,39 @@
-import { SiteHeader } from './components/SiteHeader'
-import { ClosingIndiaSection, SiteFooter } from './sections/ClosingIndiaSection'
-import { EvidenceFusionSection } from './sections/EvidenceFusionSection'
-import { ImpactSection } from './sections/ImpactSection'
-import { MonitoringGapSection } from './sections/MonitoringGapSection'
-import { PinnedMapStory } from './sections/PinnedMapStory'
-import { ProductSection } from './sections/ProductSection'
-import { WorkflowSection } from './sections/WorkflowSection'
+import { ArchitectureBento } from './components/ArchitectureBento'
+import { CleanFooter } from './components/CleanFooter'
+import { ImpactGrid } from './components/ImpactGrid'
+import { LiveQueuePreview } from './components/LiveQueuePreview'
+import { VerificationMatrix } from './components/VerificationMatrix'
+import { VideoHero } from './components/VideoHero'
 
 export function LandingPage() {
   return (
-    <div className="landing-page" id="top">
-      <a className="skip-link" href="#static-story">
-        Skip interactive map story
+    <div
+      className="landing-page min-h-screen bg-[#06080a] text-white selection:bg-emerald-500/30 selection:text-emerald-200"
+      id="top"
+    >
+      <a className="skip-link" href="#about">
+        Skip to main content
       </a>
-      <SiteHeader />
 
-      <main>
-        <PinnedMapStory />
-        <div id="static-story" tabIndex={-1}>
-          <MonitoringGapSection />
-          <EvidenceFusionSection />
-          <ImpactSection />
-          <WorkflowSection />
-          <ProductSection />
-          <ClosingIndiaSection />
-        </div>
+      <main id="main-content">
+        {/* Exact Reference Hero Section with background video & pixel dither */}
+        <VideoHero />
+
+        {/* Layer 1-2-3 Architecture (Drishti -> Srishti -> BHU-DRISHTI) */}
+        <ArchitectureBento />
+
+        {/* 4 Biophysical Verification Pillars (SAR, Optical, DEM, Photo Forensics) */}
+        <VerificationMatrix />
+
+        {/* Live Case Inspection & Queue Preview */}
+        <LiveQueuePreview />
+
+        {/* Operational Impact & Scale */}
+        <ImpactGrid />
       </main>
-      <SiteFooter />
+
+      {/* Clean Dark Studio Footer */}
+      <CleanFooter />
     </div>
   )
 }

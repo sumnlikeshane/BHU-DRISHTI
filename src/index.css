@@ -2827,3 +2827,24 @@ a:focus-visible,
     width: 100%;
   }
 }
+
+/* Dark Studio & Dither Matrix Overlays */
+.dither-mesh-overlay {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
+}
+
+.glass-card-dark {
+  background: rgba(13, 17, 23, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-dark:hover {
+  background: rgba(19, 26, 34, 0.82);
+  border-color: rgba(255, 255, 255, 0.18);
+}

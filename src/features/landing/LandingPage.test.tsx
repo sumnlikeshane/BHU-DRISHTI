@@ -1,15 +1,9 @@
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  within,
-} from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { LandingPage } from './LandingPage'
 
-describe('Phase 3 landing page', () => {
+describe('Clean Landing Page Redesign', () => {
   const setReducedMotion = (matches: boolean) => {
     vi.stubGlobal(
       'matchMedia',
@@ -27,8 +21,11 @@ describe('Phase 3 landing page', () => {
   }
 
   beforeEach(() => {
-    setReducedMotion(true)
-    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
+    setReducedMotion(false)
+    window.HTMLMediaElement.prototype.play = vi
+      .fn()
+      .mockResolvedValue(undefined)
+    window.HTMLMediaElement.prototype.pause = vi.fn()
   })
 
   afterEach(() => {
@@ -56,15 +53,17 @@ describe('Phase 3 landing page', () => {
       within(navigation).getByRole('link', { name: /Login Secure/i }),
     ).toHaveAttribute('href', '/login')
 
+    const commandCentreLinks = screen.getAllByRole('link', {
+      name: /Start review intake|Enter Command Centre Live/i,
+    })
+    expect(commandCentreLinks.length).toBeGreaterThan(0)
+    commandCentreLinks.forEach((link) => {
+      expect(link).toHaveAttribute('href', '/command-centre')
+    })
+
     expect(
-      screen.getByRole('link', { name: /Enter Command Centre Live/i }),
-    ).toHaveAttribute('href', '/command-centre')
-    expect(
-      screen.getByRole('link', { name: /Explore Demo Sign in/i }),
+      screen.getByRole('link', { name: /Explore Demo Sign In/i }),
     ).toHaveAttribute('href', '/demo')
-    expect(
-      screen.getByRole('link', { name: /View Architecture Preview/i }),
-    ).toHaveAttribute('href', '#how-it-works')
   })
 
   it('keeps a logical heading hierarchy and the complete semantic narrative', () => {
@@ -72,25 +71,14 @@ describe('Phase 3 landing page', () => {
 
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'From geo-coded evidence to watershed decisions.',
+      /Structure Your Catchment Requirement/i,
     )
 
     for (const heading of [
-      'Collection is designed in. Interpretation is still the hard part.',
-      'Add reasoning between evidence systems and field action.',
-      'Give every signal a job—and a boundary.',
-      'Validate, align, compare—then decide whether to speak.',
-      'Return an evidence packet, not a mystery score.',
-      'Make escalation rules explicit.',
-      'Use automation to allocate attention, not declare truth.',
-      'A change is observed. An impact must be demonstrated.',
-      'Keep an auditable chain from capture to closure.',
-      'One evidence model, four distinct decisions.',
-      'Move from geographic overview to site evidence.',
-      'Integrate through records, not a replacement platform.',
-      'Design the output around the decision owner.',
-      'Count the work. Then test whether land, water, farms, and livelihoods changed.',
-      'The claims behind this concept are inspectable.',
+      'Three Layers. One Auditable Chain of Truth.',
+      'Biophysical Truth. Not an Opaque Score.',
+      'Actionable Decisions for District Officers',
+      'Accountability at Catchment Scale',
     ]) {
       expect(
         screen.getByRole('heading', { level: 2, name: heading }),
@@ -99,132 +87,65 @@ describe('Phase 3 landing page', () => {
 
     expect(document.querySelector('#about')).toBeInTheDocument()
     expect(document.querySelector('#how-it-works')).toBeInTheDocument()
+    expect(document.querySelector('#demo')).toBeInTheDocument()
     expect(document.querySelector('#impact')).toBeInTheDocument()
-    expect(document.querySelector('#research-basis')).toBeInTheDocument()
   })
 
-  it('pairs every operational status with a symbol, label, and text cue', () => {
+  it('renders the background video asset with correct source and attributes', () => {
     render(<LandingPage />)
 
-    const statusKey = screen.getAllByRole('list', {
-      name: 'Operational status examples',
-    })[0]
-    for (const status of [
-      [
-        '✓',
-        'No current flag',
-        'Screened signals remain within the monitored baseline',
-      ],
-      ['◷', 'Monitor', 'Observe the next evidence cycle'],
-      ['!', 'High priority', 'Inspection recommended'],
-      ['?', 'Evidence gap', 'Evidence is missing, stale, or contradictory'],
-    ]) {
-      expect(within(statusKey).getByText(status[0])).toBeInTheDocument()
-      expect(within(statusKey).getByText(status[1])).toBeInTheDocument()
-      expect(within(statusKey).getByText(status[2])).toBeInTheDocument()
-    }
+    const video = screen.getByTestId('hero-video')
+    expect(video).toBeInTheDocument()
+    expect(video).toHaveAttribute('src', '/ditther-150926-112600-720x404.mp4')
+    expect(video).toHaveAttribute('loop')
+    expect(video).toHaveAttribute('playsinline')
   })
 
-  it('renders equivalent semantic content and a poster when motion is reduced', () => {
+  it('pauses background video when prefers-reduced-motion is true', () => {
+    setReducedMotion(true)
     render(<LandingPage />)
 
+    const video = screen.getByTestId('hero-video') as HTMLVideoElement
+    expect(video.pause).toHaveBeenCalled()
+  })
+
+  it('renders the floating telemetry cards with active metrics', () => {
+    render(<LandingPage />)
+
+    expect(screen.getByText('34,850')).toBeInTheDocument()
+    expect(screen.getByText('Watersheds Audited')).toBeInTheDocument()
+    expect(screen.getByText('412')).toBeInTheDocument()
+
+    expect(screen.getByText('MH · RJ · MP · KA')).toBeInTheDocument()
+    expect(screen.getByText('Coverage')).toBeInTheDocument()
+    expect(screen.getByText('Remote')).toBeInTheDocument()
+  })
+
+  it('renders the three architectural tiers accurately', () => {
+    render(<LandingPage />)
+
+    expect(screen.getByText('Drishti Field Capture')).toBeInTheDocument()
+    expect(screen.getByText('Srishti GIS Layers')).toBeInTheDocument()
+    expect(screen.getByText('BHU-DRISHTI AI Engine')).toBeInTheDocument()
+  })
+
+  it('renders the four biophysical verification protocols', () => {
+    render(<LandingPage />)
+
+    expect(screen.getByText('Water Retention Index (WRI)')).toBeInTheDocument()
+    expect(screen.getByText('Vegetation Response Delta')).toBeInTheDocument()
     expect(
-      screen.getByRole('link', { name: 'Skip interactive map story' }),
-    ).toHaveAttribute('href', '#static-story')
-    expect(screen.getByTestId('map-fallback')).toHaveAttribute(
-      'data-visible',
-      'true',
-    )
-    expect(
-      screen.getAllByAltText(/Prototype map of India/i).length,
-    ).toBeGreaterThan(0)
-    expect(document.querySelector('.map-experience')).toHaveAttribute(
-      'data-fallback-reason',
-      'reduced-motion',
-    )
-    expect(
-      screen.getByText(/Final release geometry requires Survey of India/i),
+      screen.getByText('Topographic Drainage Alignment'),
     ).toBeInTheDocument()
-    expect(document.querySelector('canvas')).not.toBeInTheDocument()
-    expect(document.querySelector('.pin-spacer')).not.toBeInTheDocument()
-  })
-
-  it('keeps the poster visible while the renderer initializes', () => {
-    setReducedMotion(false)
-    render(<LandingPage />)
-
-    expect(screen.getByTestId('map-fallback')).toHaveAttribute(
-      'data-visible',
-      'true',
-    )
-    expect(document.querySelector('.map-experience')).toHaveAttribute(
-      'data-fallback-only',
-      'false',
-    )
     expect(
-      screen.getAllByText('A national evidence estate, already in motion.')
-        .length,
-    ).toBeGreaterThan(0)
-  })
-
-  it('declares a map-first mobile-safe composition hook', () => {
-    render(<LandingPage />)
-
-    expect(
-      document.querySelector('[data-mobile-layout="map-first"]'),
+      screen.getByText('Temporal Photo & Geotag Forensics'),
     ).toBeInTheDocument()
   })
 
-  it('does not expose implementation annotations in the interface', () => {
+  it('includes an accessible skip link for keyboard navigation', () => {
     render(<LandingPage />)
 
-    for (const annotation of [
-      'Interactive 3D geometry',
-      'Loading interactive 3D geometry',
-      'Prototype intelligence markers · illustrative only',
-      'Prototype administrative geometry projected at build time.',
-    ]) {
-      expect(screen.queryByText(annotation)).not.toBeInTheDocument()
-    }
-    expect(document.querySelector('.closing-marker')).not.toBeInTheDocument()
-  })
-
-  it('updates header story state only at chapter boundaries', () => {
-    render(<LandingPage />)
-    const header = document.querySelector('.site-header')
-    expect(header).toHaveAttribute('data-story-chapter', '1')
-
-    fireEvent(
-      window,
-      new CustomEvent('bhu-story-chapter', {
-        detail: { label: 'nashik-focus', index: 4 },
-      }),
-    )
-
-    expect(header).toHaveAttribute('data-story-active', 'true')
-    expect(header).toHaveAttribute('data-story-chapter', '5')
-  })
-
-  it('closes the mobile menu on Escape and returns focus to its toggle', () => {
-    render(<LandingPage />)
-    const toggle = screen.getByRole('button', {
-      name: 'Open navigation menu',
-    })
-
-    fireEvent.click(toggle)
-    expect(toggle).toHaveAttribute('aria-expanded', 'true')
-    fireEvent.keyDown(window, { key: 'Escape' })
-
-    expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    expect(toggle).toHaveFocus()
-  })
-
-  it('visibly classifies every metric rendered on the page', () => {
-    render(<LandingPage />)
-    const metrics = Array.from(document.querySelectorAll('.metric'))
-    expect(metrics.length).toBeGreaterThan(0)
-    metrics.forEach((metric) => {
-      expect(metric.querySelector('.data-label')).toBeInTheDocument()
-    })
+    const skipLink = screen.getByRole('link', { name: 'Skip to main content' })
+    expect(skipLink).toHaveAttribute('href', '#about')
   })
 })
