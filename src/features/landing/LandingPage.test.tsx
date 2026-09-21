@@ -41,29 +41,39 @@ describe('Clean Landing Page Redesign', () => {
       name: 'Primary navigation',
     })
     expect(
-      within(navigation).getByRole('link', { name: 'About' }),
-    ).toHaveAttribute('href', '#about')
+      within(navigation).getByRole('link', { name: 'HOME' }),
+    ).toHaveAttribute('href', '#top')
     expect(
-      within(navigation).getByRole('link', { name: 'How It Works' }),
-    ).toHaveAttribute('href', '#how-it-works')
+      within(navigation).getByRole('link', { name: 'ECOSYSTEM' }),
+    ).toHaveAttribute('href', '#ecosystem')
     expect(
-      within(navigation).getByRole('link', { name: 'Impact' }),
-    ).toHaveAttribute('href', '#impact')
+      within(navigation).getByRole('link', { name: 'WATERSHED' }),
+    ).toHaveAttribute('href', '#land')
     expect(
-      within(navigation).getByRole('link', { name: /Login Secure/i }),
-    ).toHaveAttribute('href', '/login')
+      within(navigation).getByRole('link', { name: 'EVIDENCE' }),
+    ).toHaveAttribute('href', '#evidence')
+    expect(
+      within(navigation).getByRole('link', { name: 'DECISION' }),
+    ).toHaveAttribute('href', '#decision')
+    expect(
+      within(navigation).getByRole('link', { name: 'SCALE' }),
+    ).toHaveAttribute('href', '#scale')
 
     const commandCentreLinks = screen.getAllByRole('link', {
-      name: /Start review intake|Enter Command Centre Live/i,
+      name: /COMMAND CENTRE/i,
     })
     expect(commandCentreLinks.length).toBeGreaterThan(0)
     commandCentreLinks.forEach((link) => {
       expect(link).toHaveAttribute('href', '/command-centre')
     })
 
-    expect(
-      screen.getByRole('link', { name: /Explore Demo Sign In/i }),
-    ).toHaveAttribute('href', '/demo')
+    const officerLoginLinks = screen.getAllByRole('link', {
+      name: /OFFICER LOGIN/i,
+    })
+    expect(officerLoginLinks.length).toBeGreaterThan(0)
+    officerLoginLinks.forEach((link) => {
+      expect(link).toHaveAttribute('href', '/login')
+    })
   })
 
   it('keeps a logical heading hierarchy and the complete semantic narrative', () => {
@@ -71,24 +81,28 @@ describe('Clean Landing Page Redesign', () => {
 
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      /A Decision-Support Layer for Watershed Monitoring/i,
+      /FROM TERRAIN/i,
     )
 
     for (const heading of [
-      'The Data Already Exists. The Reasoning Layer Is Missing.',
-      'Evidence Fusion Aligned by Work ID',
-      'Every Reviewed Case Placed into Four States',
-      'Evidence-Based Prioritisation at Scale',
+      'THE LAND',
+      'THE EVIDENCE',
+      'THE REASONING',
+      'THE DECISION',
+      'THE SCALE',
+      'THE OUTCOME',
     ]) {
       expect(
         screen.getByRole('heading', { level: 2, name: heading }),
       ).toBeInTheDocument()
     }
 
-    expect(document.querySelector('#about')).toBeInTheDocument()
-    expect(document.querySelector('#how-it-works')).toBeInTheDocument()
-    expect(document.querySelector('#demo')).toBeInTheDocument()
-    expect(document.querySelector('#impact')).toBeInTheDocument()
+    expect(document.querySelector('#ecosystem')).toBeInTheDocument()
+    expect(document.querySelector('#land')).toBeInTheDocument()
+    expect(document.querySelector('#evidence')).toBeInTheDocument()
+    expect(document.querySelector('#decision')).toBeInTheDocument()
+    expect(document.querySelector('#scale')).toBeInTheDocument()
+    expect(document.querySelector('#outcome')).toBeInTheDocument()
   })
 
   it('renders the background video asset with correct source and attributes', () => {
@@ -96,7 +110,7 @@ describe('Clean Landing Page Redesign', () => {
 
     const video = screen.getByTestId('hero-video')
     expect(video).toBeInTheDocument()
-    expect(video).toHaveAttribute('src', '/ditther-150926-112600-720x404.mp4')
+    expect(video).toHaveAttribute('src', '/hero.mp4')
     expect(video).toHaveAttribute('loop')
     expect(video).toHaveAttribute('playsinline')
   })
@@ -109,43 +123,47 @@ describe('Clean Landing Page Redesign', () => {
     expect(video.pause).toHaveBeenCalled()
   })
 
-  it('renders the floating telemetry cards with active metrics', () => {
+  it('renders the official 1 Sep 2026 scale figures', () => {
     render(<LandingPage />)
 
     expect(screen.getAllByText('1,220').length).toBeGreaterThan(0)
-    expect(screen.getByText('Sanctioned Projects')).toBeInTheDocument()
-    expect(screen.getAllByText('1.24 Lakh').length).toBeGreaterThan(0)
-    expect(screen.getByText('Water Structures')).toBeInTheDocument()
-
-    expect(screen.getByText('MH · RJ · MP · KA')).toBeInTheDocument()
-    expect(screen.getByText('Coverage')).toBeInTheDocument()
-    expect(screen.getByText('Remote')).toBeInTheDocument()
+    expect(screen.getByText('SANCTIONED WATERSHED PROJECTS')).toBeInTheDocument()
+    expect(screen.getAllByText('52.93 LAKH HA').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('1.24 LAKH').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('28.50 LAKH').length).toBeGreaterThan(0)
   })
 
-  it('renders the three architectural tiers accurately', () => {
+  it('renders the 4 operational review triage queues', () => {
     render(<LandingPage />)
 
-    expect(screen.getByText('Drishti Field Capture')).toBeInTheDocument()
-    expect(screen.getByText('Srishti GIS Layers')).toBeInTheDocument()
-    expect(screen.getByText('BHU-DRISHTI Reasoning')).toBeInTheDocument()
+    expect(screen.getByText('Recollect Evidence')).toBeInTheDocument()
+    expect(screen.getByText('Analyst Review')).toBeInTheDocument()
+    expect(screen.getByText('Field Inspection')).toBeInTheDocument()
+    expect(screen.getByText('Routine Monitoring')).toBeInTheDocument()
   })
 
-  it('renders the four evidence sources and reasoning abstention rule', () => {
+  it('renders the value proposition section with 4 watershed structure cutaway specimens', () => {
     render(<LandingPage />)
 
-    expect(screen.getByText('Field Evidence')).toBeInTheDocument()
-    expect(screen.getByText('Earth Observation')).toBeInTheDocument()
-    expect(screen.getByText('Hydrometeorology')).toBeInTheDocument()
-    expect(screen.getByText('Watershed Context')).toBeInTheDocument()
-    expect(
-      screen.getByText('"Insufficient Evidence" is a Valid Output'),
-    ).toBeInTheDocument()
+    expect(screen.getByText('OUR VALUE PROPOSITION')).toBeInTheDocument()
+    expect(screen.getByText('Redefining watershed verification.')).toBeInTheDocument()
+    expect(screen.getByText('Exhaustive coverage')).toBeInTheDocument()
+    expect(screen.getByText('Greater accuracy')).toBeInTheDocument()
+    expect(screen.getByText('Faster verification')).toBeInTheDocument()
+    expect(screen.getByText('Focused expenditure')).toBeInTheDocument()
+
+    const images = screen.getAllByRole('img')
+    const watershedImageSrcs = images.map((img) => img.getAttribute('src'))
+    expect(watershedImageSrcs).toContain('/images/watershed/check-dam.jpg')
+    expect(watershedImageSrcs).toContain('/images/watershed/percolation-pond.jpg')
+    expect(watershedImageSrcs).toContain('/images/watershed/contour-trench.jpg')
+    expect(watershedImageSrcs).toContain('/images/watershed/recharge-shaft.jpg')
   })
 
   it('includes an accessible skip link for keyboard navigation', () => {
     render(<LandingPage />)
 
     const skipLink = screen.getByRole('link', { name: 'Skip to main content' })
-    expect(skipLink).toHaveAttribute('href', '#about')
+    expect(skipLink).toHaveAttribute('href', '#ecosystem')
   })
 })

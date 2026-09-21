@@ -1,48 +1,50 @@
 @import 'tailwindcss';
 @import './styles/tokens.css';
 
-html {
-  color: var(--ink);
-  background: var(--canvas);
-  font-family: var(--font-sans);
-  scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
-  text-rendering: optimizeLegibility;
-}
+@layer base {
+  html {
+    color: var(--ink);
+    background: var(--canvas);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    text-rendering: optimizeLegibility;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-body {
-  min-width: 320px;
-  min-height: 100vh;
-  margin: 0;
-  overflow-x: hidden;
-  background: var(--canvas);
-}
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--canvas);
+  }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
 
-a {
-  color: inherit;
-}
+  a {
+    color: inherit;
+  }
 
-button:focus-visible,
-a:focus-visible,
-[tabindex='-1']:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 4px;
+  button:focus-visible,
+  a:focus-visible,
+  [tabindex='-1']:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 4px;
+  }
 }
 
 .skip-link {
